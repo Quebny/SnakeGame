@@ -10,11 +10,8 @@ int snakeY[100];
 int snakeSize=3;
 int snake_x=5;
 int snake_y=3;
-int fruit=65;
 int fruitX;
 int fruitY;
-int speed=100;
-int score=0;
 bool eaten=true;
 bool alive=true;
 int X; int Y;
@@ -35,6 +32,12 @@ void drawSnake()
         cprintf("@");
     }
 }
+
+void fruitPos()
+{
+
+}
+
 void moveSnake()
 {
     gotoxy(snakeX[snakeSize-1],snakeY[snakeSize-1]);
@@ -140,52 +143,27 @@ int main()
                 break;
             }
         }
-
-        gotoxy(85,5);
-        cout<<"SCORE: "<<score;
-                                        //FRUITXY DEBUGGING
-                                        gotoxy(85,7);
-                                        if (fruitX<10)
-                                            cout<<"0";
-                                        cout<<fruitX;
-                                        gotoxy(85,8);
-                                        if (fruitY<10)
-                                            cout<<"0";
-                                        cout<<fruitY;
         if(eaten==true)
         {
-            fruitX=(rand()%76)+2;
-            fruitY=(rand()%32)+2;
+            fruitX=rand()%(4,76);
+            fruitY=rand()%(4,32);
             gotoxy(fruitX,fruitY);
             cout<<"A";
             eaten=false;
         }
-        if(fruitX==snakeX[0]&&fruitY==snakeY[0])
-            {
-                eaten=true;
-                if(30<speed)
-                    speed=speed-5;
-                snakeSize++;
-                score++;
-            }
-        for(int i=1;i<snakeSize;i++)
+        gotoxy(85,5);
+        cout<<fruitX;
+        gotoxy(85,6);
+        cout<<fruitY;
+        if (snakeY[0]==35 || snakeY[0]==1 || snakeX[0]==79 || snakeX[0]==1)
+            alive=false;
+        if (snakeX[0]==fruitX && snakeY[0]==fruitY)
         {
-            if(fruitX==snakeX[i]&&fruitY==snakeY[i])
-            {
-                fruitX=(rand()% 76)+3;
-                fruitY=(rand()% 33)+2;
-                gotoxy(fruitX,fruitY);
-                cout<<"B";
-            }
+            eaten=true;
         }
         moveSnake();
         drawSnake();
-        Sleep(speed);
-        if (snakeY[0]==35 || snakeY[0]==1 || snakeX[0]==79 || snakeX[0]==1)
-            alive=false;
-        for(int i=1;i<snakeSize;i++)
-            if(snakeX[0]==snakeX[i]&&snakeY[0]==snakeY[i])
-                alive=false;
+        Sleep(100);
     }
     getch();
     return 0;
