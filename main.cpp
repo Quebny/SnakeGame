@@ -10,7 +10,14 @@ int snakeY[100];
 int snakeSize=3;
 int snake_x=5;
 int snake_y=3;
+int fruit=65;
+int fruitX;
+int fruitY;
+int speed=100;
+int score=0;
+bool eaten=true;
 bool alive=true;
+int X; int Y;
 int direccion=4; //1 arriba, 2 abajo, 3 izq, 4 der
 
 void drawSnake()
@@ -58,6 +65,7 @@ void moveSnake()
 
 int main()
 {
+    srand(time(NULL));
     int j;
     for (j = 1; j < 80; j++)
     {
@@ -111,6 +119,8 @@ int main()
          *115 abajo
          *97  izquierda
          *100 derecha */
+
+
         if(kbhit())
         {
             int movement=(int)getch();
@@ -130,12 +140,52 @@ int main()
                 break;
             }
         }
-        if (snakeY[0]==34 || snakeY[0]==2 || snakeX[0]==78 || snakeX[0]==2)
-            alive=false;
-            
+
+        gotoxy(85,5);
+        cout<<"SCORE: "<<score;
+                                        //FRUITXY DEBUGGING
+                                        gotoxy(85,7);
+                                        if (fruitX<10)
+                                            cout<<"0";
+                                        cout<<fruitX;
+                                        gotoxy(85,8);
+                                        if (fruitY<10)
+                                            cout<<"0";
+                                        cout<<fruitY;
+        if(eaten==true)
+        {
+            fruitX=(rand()%76)+2;
+            fruitY=(rand()%32)+2;
+            gotoxy(fruitX,fruitY);
+            cout<<"A";
+            eaten=false;
+        }
+        if(fruitX==snakeX[0]&&fruitY==snakeY[0])
+            {
+                eaten=true;
+                if(30<speed)
+                    speed=speed-5;
+                snakeSize++;
+                score++;
+            }
+        for(int i=1;i<snakeSize;i++)
+        {
+            if(fruitX==snakeX[i]&&fruitY==snakeY[i])
+            {
+                fruitX=(rand()% 76)+3;
+                fruitY=(rand()% 33)+2;
+                gotoxy(fruitX,fruitY);
+                cout<<"B";
+            }
+        }
         moveSnake();
         drawSnake();
-        Sleep(100);
+        Sleep(speed);
+        if (snakeY[0]==35 || snakeY[0]==1 || snakeX[0]==79 || snakeX[0]==1)
+            alive=false;
+        for(int i=1;i<snakeSize;i++)
+            if(snakeX[0]==snakeX[i]&&snakeY[0]==snakeY[i])
+                alive=false;
     }
     getch();
     return 0;
