@@ -10,11 +10,8 @@ int snakeY[100];
 int snakeSize=3;
 int snake_x=5;
 int snake_y=3;
-int fruit=65;
 int fruitX;
 int fruitY;
-int speed=100;
-int score=0;
 bool eaten=true;
 bool alive=true;
 int X; int Y;
@@ -35,6 +32,12 @@ void drawSnake()
         cprintf("@");
     }
 }
+
+void fruitPos()
+{
+
+}
+
 void moveSnake()
 {
     gotoxy(snakeX[snakeSize-1],snakeY[snakeSize-1]);
@@ -142,13 +145,19 @@ int main()
         }
         if(eaten==true)
         {
+<<<<<<< HEAD
             fruitX=rand()% 78+2;
             fruitY=rand()% 33+2;
+=======
+            fruitX=rand()%(4,76);
+            fruitY=rand()%(4,32);
+>>>>>>> f9db937f92f2fb65e733a8578c2ff4837b4a82b1
             gotoxy(fruitX,fruitY);
             cout<<"A";
             eaten=false;
         }
         gotoxy(85,5);
+<<<<<<< HEAD
         cout<<"SCORE: "<<score;
         if (fruitX&&fruitY==int("A"))
         {
@@ -170,6 +179,20 @@ int main()
         Sleep(speed);
         if (snakeY[0]==35 || snakeY[0]==1 || snakeX[0]==79 || snakeX[0]==1)
             alive=false;
+=======
+        cout<<fruitX;
+        gotoxy(85,6);
+        cout<<fruitY;
+        if (snakeY[0]==35 || snakeY[0]==1 || snakeX[0]==79 || snakeX[0]==1)
+            alive=false;
+        if (snakeX[0]==fruitX && snakeY[0]==fruitY)
+        {
+            eaten=true;
+        }
+        moveSnake();
+        drawSnake();
+        Sleep(100);
+>>>>>>> f9db937f92f2fb65e733a8578c2ff4837b4a82b1
     }
     getch();
     return 0;
